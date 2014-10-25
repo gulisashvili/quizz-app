@@ -4,9 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var registration = require('./routes/registration');
+
+
+mongoose.connect("mongodb://localhost/quiz-app");
+
+
 
 var app = express();
 
@@ -23,7 +29,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.route('/register')
+    .get(registration.index)
+    .post(function(req,res, next) {
+        console.log("Middlware Is Working");
+        next();
+    },registration.register);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
