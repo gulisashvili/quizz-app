@@ -1,15 +1,17 @@
 body, html {
   height: 100%;
-  color: #FFF;
 }
 body {
 	margin: 0;
 	font-family: 'Open Sans', sans-serif;
+	background-color: #ecf0f1;
 }
 .main-wrapper {
 	height: 100%;
-	background: url('../images/landing-page-logo.jpg') no-repeat 0 0;
-	background-size: cover;
+}
+
+.main-wrapper h1 {
+	margin:0;
 }
 
 
@@ -33,3 +35,52 @@ body {
 .alert {
 	text-align: center;
 }
+
+
+
+
+
+
+
+
+
+
+/*   admin panel */
+
+.quizz-list {
+	/*background: #F6FAFA;*/
+	height: 340px;
+	border-radius: 5px;
+}
+
+.admin-toolbar a,
+.glyphicon {
+	margin: 0 4px;
+}
+
+
+#gen-test {
+	position: fixed;
+	right: 1%;
+	bottom: 1%;
+}
+
+#gen-test button {
+	margin-left: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+/* end of admin panel */
+
+
+
+
+

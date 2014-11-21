@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  h3 Admin Panel
+  .row
+    .col-xs-12.col-md-7
+      .quizz-list
+        .panel.panel-default
+          .panel-body Basic panel example
+
+    .col-xs-12.col-md-5
+      .admin-toolbar
+        .panel.panel-default
+          .panel-body
+            a.btn.btn-success(href="/admin/create/test") add test
+              span(class="glyphicon glyphicon-plus") 
+            a.btn.btn-warning(href="#") edit tests
+              span(class="glyphicon glyphicon-edit")
+            a.btn.btn-primary(href="#")
+              span(class="glyphicon glyphicon-cog")
+
+
+
