@@ -7,6 +7,10 @@ block content
       .quizz-list
         .panel.panel-default
           .panel-body Basic panel example
+            each quizz in quizzs 
+              a(href="#{quizz._id}")
+                li= quizz.testName
+
 
     .col-xs-12.col-md-5
       .admin-toolbar

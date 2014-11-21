@@ -1,9 +1,13 @@
 var express = require('express');
 var adminRouter = express.Router();
-var str2json = require('string-to-json');
+var mongoose = require('mongoose');
+var Quizz = require('../models/quizz');
 
 adminRouter.get('/', function(req, res) {
-	res.render('admin/index');
+	Quizz.find({}, function(err, quizzs) {
+		if(err) { throw err; }
+		res.render('admin/index', { quizzs: quizzs });
+	});
 });
 
 adminRouter.get('/create/test', function(req, res) {
@@ -11,17 +15,22 @@ adminRouter.get('/create/test', function(req, res) {
 });
 
 adminRouter.post('/create/test', function(req, res) {
-	console.log(req.body.data);
-// console.log(JSON.parse(req.body.data));
+	var result = req.body;
 
+	var testName = result.testName,
+		questions = result.questions;
 
-
-
-	// var testName = req.body.testName;
-	// var questions = req.body.questions;
-
+	new Quizz({
+		testName: testName,
+		questions: questions
+	})
+	.save(function (err) {
+  	if (err) return handleError(err);
+		console.log("SAVED");
+	});
 
 	res.json({redirect: '/admin'});
+
 });
 
 

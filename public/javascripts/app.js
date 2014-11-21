@@ -121,43 +121,29 @@ function sendTest() {
           answer4: answer4,
           correctAnswer: correctAnswer
         }  
+
       
         questionArr.push(question); 
-        
+        question = {};
     });
       var sendData = {
         testName: testName,
         questions : questionArr
       }
 
-      var k = JSON.stringify(sendData);
-      var b = JSON.parse(k);
-
-      alert(b);
-      var data = {
-        name: 'levan'
-      }
-
 
       $.ajax({
         type: "POST",
-        data: ['vaxo'],
+        contentType: 'application/json',
+        data:  JSON.stringify(sendData),
         url: "/admin/create/test",
         success: function(result){
-          console.log(sendData);
-          
-          // if (typeof result.redirect == 'string') {
-          //   window.location = result.redirect;
-          // }
+          console.log(sendData);  
+          if (typeof result.redirect == 'string') {
+            window.location = result.redirect;
+          }
         }
       });
-
-    // $.post('/admin/create/test', { data: sendData }, function(result) {
-    //     // console.log(sendData);
-    //       if (typeof result.redirect == 'string') {
-    //         window.location = result.redirect;
-    //       }
-    // });
 
   });
 
