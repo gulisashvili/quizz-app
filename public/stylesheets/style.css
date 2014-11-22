@@ -4,6 +4,7 @@ body, html {
 body {
 	margin: 0;
 	font-family: 'Open Sans', sans-serif;
+	font-size: 17px;
 	background-color: #ecf0f1;
 }
 .main-wrapper {
@@ -12,6 +13,15 @@ body {
 
 .main-wrapper h1 {
 	margin:0;
+}
+
+a {
+	color: #FFF;
+}
+
+a:hover {
+	color: #FFF;
+	text-decoration: none;
 }
 
 
@@ -47,7 +57,7 @@ body {
 
 /*   admin panel */
 
-.quizz-list {
+.quizz-list-wrapper {
 	/*background: #F6FAFA;*/
 	height: 340px;
 	border-radius: 5px;
@@ -69,6 +79,18 @@ body {
 	margin-left: 3px;
 }
 
+.quizz-list {
+	padding: 10px 0;
+	border-bottom: 1px solid #e3e3e3;
+}
+
+.quizz-list strong {
+	cursor: pointer;
+}
+
+.quizz-list span {
+	margin-left: 3px;
+}
 
 
 

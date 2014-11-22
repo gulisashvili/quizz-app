@@ -4,12 +4,19 @@ block content
   h3 Admin Panel
   .row
     .col-xs-12.col-md-7
-      .quizz-list
+      .quizz-list-wrapper
         .panel.panel-default
-          .panel-body Basic panel example
-            each quizz in quizzs 
-              a(href="#{quizz._id}")
-                li= quizz.testName
+          .panel-body All Tests 
+            ul(class="list-unstyled")  
+              each quizz in quizzs
+                li.quizz-list
+                  strong #{quizz.testName}
+                    .pull-right
+                      span(class="label label-success start-quizz", data-id="#{quizz._id}") start 
+                      span(class="label label-warning edit-quizz", data-id="#{quizz._id}") 
+                       a(href="/admin/tests/#{quizz._id}/edit") edit 
+                      span(class="label label-danger delete-quizz", data-id="#{quizz._id}")  delete 
+
 
 
     .col-xs-12.col-md-5
@@ -18,8 +25,6 @@ block content
           .panel-body
             a.btn.btn-success(href="/admin/create/test") add test
               span(class="glyphicon glyphicon-plus") 
-            a.btn.btn-warning(href="#") edit tests
-              span(class="glyphicon glyphicon-edit")
             a.btn.btn-primary(href="#")
               span(class="glyphicon glyphicon-cog")
 

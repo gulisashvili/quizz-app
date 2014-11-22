@@ -4,6 +4,8 @@ login();
 register();
 generateQuestions();
 sendTest();
+deleteQuizz();
+updateTest();
 
 });
 
@@ -21,9 +23,6 @@ function questTemplateGenerator(number) {
   ].join('');
   return template;
 }
-
-
-
 
 function register() {
   var regBtn = $('#reg-btn');
@@ -56,7 +55,6 @@ function register() {
   });
 };
 
-
 function login() {
   var loginBtn = $('#login-btn');
 
@@ -76,10 +74,8 @@ function login() {
   });
 }
 
-
-
 function generateQuestions() {
-  var genBtn = $('#gen-test-btn');
+  var genBtn = $('.gen-test-btn');
   var genQuestions = $('.generated-questions');
   var counter = 0;
 
@@ -93,14 +89,11 @@ function generateQuestions() {
 
 };
 
-
-
 function sendTest() {
   var saveBtn = $('#save-test-btn');
 
 
   saveBtn.on('click', function() {
-    var counter=1;
     var question = {};
     var questionArr = [];
     var testName = $('#test-name').val();
@@ -131,21 +124,100 @@ function sendTest() {
         questions : questionArr
       }
 
-
-      $.ajax({
-        type: "POST",
-        contentType: 'application/json',
-        data:  JSON.stringify(sendData),
-        url: "/admin/create/test",
-        success: function(result){
-          console.log(sendData);  
-          if (typeof result.redirect == 'string') {
-            window.location = result.redirect;
+      if(testName) {
+        $.ajax({
+          type: 'POST',
+          contentType: 'application/json',
+          data:  JSON.stringify(sendData),
+          url: '/admin/create/test',
+          success: function(result){
+            console.log(sendData);  
+            if (typeof result.redirect == 'string') {
+              window.location = result.redirect;
+            }
           }
-        }
-      });
+        });
+      }
+      
 
   });
 
+
+};
+
+
+function deleteQuizz() {
+  var deleteBtn = $('.delete-quizz');
+  var quizzId = deleteBtn.data('id');
+
+  deleteBtn.on('click', function() {
+    $.ajax({
+      url:'/admin/tests/' + quizzId,
+        type:"DELETE",
+        success:function(result){
+          if(result.success) 
+            location.reload();
+        }
+    });
+  });
+
+};
+
+
+function updateTest() {
+  var quizzId = $('.edit-quizz-wrapper').data('id');
+  var updateBtn = $('#update-quizz-btn');
+
+  updateBtn.on('click', function() {
+
+    var question = {};
+    var questionArr = [];
+    var testName = $('#new-test-name').val();
+    var questionWrapper = $('.question-wrapper');
+    questionWrapper.each(function(index, element) {
+      var question = $(element).children('input.question-name').val(),
+        answer1 = $(element).children('input.answer-1').val(),
+        answer2 = $(element).children('input.answer-2').val(),
+        answer3 = $(element).children('input.answer-3').val(),
+        answer4 = $(element).children('input.answer-4').val(),
+        correctAnswer = $(element).children('input.correct-answer').val();
+
+        question = {
+          question: question,
+          answer1: answer1,
+          answer2: answer2,
+          answer3: answer3,
+          answer4: answer4,
+          correctAnswer: correctAnswer
+        }  
+
+      
+        questionArr.push(question); 
+        question = {};
+    });
+      var sendData = {
+        testName: testName,
+        questions : questionArr
+      }
+
+      if(testName) {
+        $.ajax({
+          type: 'PUT',
+          contentType: 'application/json',
+          data:  JSON.stringify(sendData),
+          url: '/admin/tests/' + quizzId + '/update',
+          success: function(result){
+            console.log(sendData);  
+            if (typeof result.redirect == 'string') {
+              window.location = result.redirect;
+            }
+          }
+        });
+      }
+      
+
+
+
+  });
 
 };

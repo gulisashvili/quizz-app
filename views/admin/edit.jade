@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+  .container
+    .row.edit-quizz-wrapper(data-id="#{quizz._id}")
+      .col-xs-12.col-md-6.col-md-offset-3
+        .form-group
+          label(for='test-name') Test Name
+          textarea.form-control(id="new-test-name", placeholder='Enter Test Name') #{quizz.testName}
+        each question in quizz.questions
+          .form-group.question-wrapper
+            input.form-control.question-name(placeholder='enter question', value="#{question.question}")   
+            input.form-control.answer-1(placeholder='enter answer 1', value="#{question.answer1}")   
+            input.form-control.answer-2(placeholder='enter answer 2', value="#{question.answer2}")
+            input.form-control.answer-3(placeholder='enter answer 3', value="#{question.answer3}")
+            input.form-control.answer-4(placeholder='enter answer 4', value="#{question.answer4}")
+            input.form-control.correct-answer(placeholder='correct answer', value="#{question.correctAnswer}")
+          .generated-questions
+
+        #gen-test
+          button(id="update-quizz-btn", class="btn btn-success", type="button") update
+            span(class="glyphicon glyphicon-ok") 
+          button.btn.btn-primary.gen-test-btn(type='submit') add new question
+            span.glyphicon.glyphicon-plus
