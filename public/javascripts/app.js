@@ -1,11 +1,13 @@
 $(function() {
 
-login();
-register();
-generateQuestions();
-sendTest();
-deleteQuizz();
-updateTest();
+  login();
+  register();
+  generateQuestions();
+  sendTest();
+  deleteQuizz();
+  updateTest();
+  deleteQuest();
+  submitTest();
 
 });
 
@@ -218,6 +220,51 @@ function updateTest() {
 
 
 
+  });
+
+};
+
+
+function deleteQuest() {
+  $('.close').on('click', function() {
+    $(this).parent('.question-wrapper').remove();
+  });
+}
+
+
+
+function submitTest() {
+  var submitTestBtn = $('#test-form');
+  var testName = $('.test-title').text();
+  // var radioButtons = $('.answer:checked','#test-form').val();
+  var questionWrappers = $('.show-question-wrapper');
+  var checkedArr = [];
+
+  submitTestBtn.on('submit', function(e) {
+    e.preventDefault();
+    questionWrappers.each(function(index, element) {
+      var checkedItem = $(element).find('.answer:checked','#test-form').val();
+      checkedArr.push(checkedItem);
+    });
+      
+    var sendData = {
+      testName: testName,
+      checkedAnswers: checkedArr
+    };
+
+      console.log(sendData);
+
+      $.ajax({
+          type: 'POST',
+          contentType: 'application/json',
+          data:  JSON.stringify(sendData),
+          url: '/checktest',
+          success: function(result){
+            alert("Your score is --- " + result.finalScore + " points");  
+          }
+        });
+
+    checkedArr = [];
   });
 
 };

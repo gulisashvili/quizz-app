@@ -3,9 +3,9 @@ body, html {
 }
 body {
 	margin: 0;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Viga', sans-serif;
 	font-size: 17px;
-	background-color: #ecf0f1;
+	background-color: #F4F4F4;
 }
 .main-wrapper {
 	height: 100%;
@@ -106,3 +106,17 @@ a:hover {
 
 
 
+/* tests page*/
+h1.test-title {
+	text-align: center;
+	padding: 10px;
+}
+
+.show-question-wrapper {
+	padding: 10px;
+}
+
+.submit-test-btn{
+	margin: 10px;
+}
+/* end of tests page*/

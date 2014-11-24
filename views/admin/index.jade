@@ -1,18 +1,20 @@
 extends ../layout
 
 block content
-  h3 Admin Panel
+  h2 Admin Panel
   .row
     .col-xs-12.col-md-7
       .quizz-list-wrapper
         .panel.panel-default
-          .panel-body All Tests 
+          .panel-body 
+            h3 All Tests 
             ul(class="list-unstyled")  
               each quizz in quizzs
                 li.quizz-list
                   strong #{quizz.testName}
                     .pull-right
-                      span(class="label label-success start-quizz", data-id="#{quizz._id}") start 
+                      span(class="label label-success start-quizz", data-id="#{quizz._id}")
+                       a(href="/tests/#{quizz._id}") start 
                       span(class="label label-warning edit-quizz", data-id="#{quizz._id}") 
                        a(href="/admin/tests/#{quizz._id}/edit") edit 
                       span(class="label label-danger delete-quizz", data-id="#{quizz._id}")  delete 
