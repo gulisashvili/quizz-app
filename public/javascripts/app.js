@@ -65,14 +65,28 @@ function login() {
     var username = $('#username').val(),
         password = $('#password').val();
 
-    var sendData = {
-      username: username,
-      password: password
-    };
+    if(username && password) {
+      var sendData = {
+        username: username,
+        password: password
+      };
+      
+      $.post('/login', sendData, function(result) {
+        if(result.status == false) {
+          $('.alert.alert-danger').remove();
+          $('.login-form').prepend('<div class="alert alert-danger"> username or password is incorrect </div>');
+          $('.login-form .form-group').addClass('has-error');
+        } else if (typeof result.redirect == 'string') {
+            window.location = result.redirect;
+          }
+      });
+    } else {
+      $('.alert.alert-danger').remove();
+      $('.login-form').prepend('<div class="alert alert-danger"> username or password is incorrect </div>');
+      $('.login-form .form-group').addClass('has-error');
+    }
 
-    $.post('/', sendData, function(data) {
-      console.log(data);
-    });
+
   });
 }
 

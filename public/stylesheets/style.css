@@ -3,7 +3,8 @@ body, html {
 }
 body {
 	margin: 0;
-	font-family: 'Viga', sans-serif;
+	font-family: 'Cabin', sans-serif;
+	font-weight: bold;
 	font-size: 17px;
 	background-color: #F4F4F4;
 }

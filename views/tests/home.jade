@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  h2 All Tests
+  .row
+    .col-xs-12.col-md-7
+      .quizz-list-wrapper
+        .panel.panel-default
+          .panel-body 
+            ul(class="list-unstyled")  
+              each quizz in quizzs
+                li.quizz-list
+                  strong #{quizz.testName}
+                    .pull-right
+                      span(class="label label-success start-quizz", data-id="#{quizz._id}")
+                       a(href="/tests/#{quizz._id}") start 
+    .col-xs-12.col-md-5
+      .pull-right
+        span(class="label label-danger")
+          a(href="/logout") logout                 
