@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var User = require('./models/user');
+var Quizz = require('./models/quizz');
 
 var routes = require('./routes/index');
 var registration = require('./routes/registration');
@@ -43,11 +44,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+  res.render('index');
 });
 
 
-app.use('/', routes);
+app.use('/tests',checkAuth, routes);
 
 app.route('/register')
   .get(registration.index)
@@ -55,36 +56,29 @@ app.route('/register')
       next();
   },registration.register);
 
-app.route('/tests')
-  .get(checkAuth)
-  .get(function(req, res) {
-      res.render('tests/index');
-  });
-
 app.use('/admin', checkAuthAndAdmin, admin);
 
 function checkAuthAndAdmin(req, res, next) {
     if(req.session.user) {
       if(req.session.user['username'] == "levanigls" && req.session.user['password'] == "milan") {
-      next();
-    }
+        next();
+      } else {
+          res.redirect('/');
+      }
     }
      else {
-        res.json({ status: false });        
+        res.redirect('/');        
     }
 }
 
 
 function checkAuth(req, res, next) {
-if(req.session.user) {
-  next();
-} else {
-    res.json({ status: false });        
+  if(req.session.user) {
+    next();
+  } else {
+    res.redirect('/');
   }
 };
-
-
-
 
 app.post('/login', function(req, res) {
   var b = req.body;
@@ -105,7 +99,37 @@ app.get('/logout', function(req, res) {
   req.session = null;
   console.log(req.session);
   res.redirect('/');
-})
+});
+
+
+app.post('/checktest', function(req, res) {
+  var score = 0;
+  var correctAnswers = [];
+  var result = req.body;
+  var testName = result.testName;
+  var checkedAnswers = result.checkedAnswers;
+
+  Quizz.findOne({ testName: testName }, function(err, quizz) {
+    var arr = quizz.questions;
+    for(var i=0; i < arr.length; i++) {
+      correctAnswers.push(arr[i].correctAnswer)
+    }
+  
+    for(var i=0; i < checkedAnswers.length; i++ ) {
+      if(checkedAnswers[i] === correctAnswers[i]) {
+        score += 1;
+      }
+    }
+    var finalScore = Math.round((100*score)/(checkedAnswers.length));
+    
+    res.json( {
+      finalScore: finalScore
+    });
+  });
+});
+
+
+
 
 
 
