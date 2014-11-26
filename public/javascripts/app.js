@@ -266,15 +266,15 @@ function submitTest() {
       checkedAnswers: checkedArr
     };
 
-      console.log(sendData);
-
       $.ajax({
           type: 'POST',
           contentType: 'application/json',
           data:  JSON.stringify(sendData),
           url: '/checktest',
           success: function(result){
-            alert("Your score is --- " + result.finalScore + " points");  
+            if(result.finalScore) {
+              alert("Your score is --- " + result.finalScore + " points");  
+            }
           }
         });
 

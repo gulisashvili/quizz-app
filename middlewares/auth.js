@@ -1,9 +1,25 @@
+var session = require('cookie-session');
 
-exports.ensureAuth = function (request, response, next) {
-	var isAuthanticated = true;
-	if(isAuthanticated) {
-		next();
-	} else {
-		response.redirect('/');
-	}
-}
+
+// ensure user is authenticated
+exports.ensureAuth = function (req, res, next) {
+  if(req.session.user) {
+    next();
+  } else {
+    res.redirect('/');
+  }
+};
+
+// ensure user is authenticated and is admin
+exports.ensureAuthAndAdmin = function (req, res, next) {
+    if(req.session.user) {
+      if(req.session.user.userType == "admin") {
+        next();
+      } else {
+          res.redirect('/');
+      }
+    }
+     else {
+        res.redirect('/');        
+    }
+};

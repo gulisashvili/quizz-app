@@ -12,7 +12,7 @@ var Quizz = require('./models/quizz');
 
 var routes = require('./routes/index');
 var registration = require('./routes/registration');
-var auth = require('./middlewares/auth');
+var authMiddlware = require('./middlewares/auth');
 var admin = require('./routes/admin');
 
 
@@ -27,66 +27,59 @@ app.set('trust proxy', 1) // trust first proxy
 
 app.use(session({
   keys: ['key1', 'key2']
-}))
+}));
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Log In Page 
+app.get('/', function (req, res) {
+  // new User({
+  //   username: 'levanigls',
+  //   password: 'milan',
+  //   userType: 'admin'
+  // }).save(function(err) {
 
-app.get('/', function(req, res) {
-  res.render('index');
+  // })
+
+  if(req.session.user) {
+    res.redirect('/tests');
+  } else {
+    res.render('index');
+  }
 });
 
 
-app.use('/tests',checkAuth, routes);
 
+
+// Tests routes
+app.use('/tests', authMiddlware.ensureAuth, routes);
+
+// Register Routes
 app.route('/register')
   .get(registration.index)
-  .post(function(req,res, next) {
-      next();
-  },registration.register);
-
-app.use('/admin', checkAuthAndAdmin, admin);
-
-function checkAuthAndAdmin(req, res, next) {
-    if(req.session.user) {
-      if(req.session.user['username'] == "levanigls" && req.session.user['password'] == "milan") {
-        next();
-      } else {
-          res.redirect('/');
-      }
-    }
-     else {
-        res.redirect('/');        
-    }
-}
-
-
-function checkAuth(req, res, next) {
-  if(req.session.user) {
+  .post(function (req,res, next) {
     next();
-  } else {
-    res.redirect('/');
-  }
-};
+  }, registration.register);
 
-app.post('/login', function(req, res) {
+// Admin Routes
+app.use('/admin', authMiddlware.ensureAuthAndAdmin, admin);
+
+// Log in route
+app.post('/login', function (req, res) {
   var b = req.body;
   User.findOne({username: b.username, password: b.password}, function(err, user) {
     if(user) {
-      console.log(user);
       req.session.user = user;
-      console.log(req.session);
       res.json({ redirect: '/tests'});
     } else if(!user) {
         res.json({ status: false });
@@ -94,15 +87,16 @@ app.post('/login', function(req, res) {
   });
 });
 
-
-app.get('/logout', function(req, res) {
+// Log out route
+app.get('/logout', function (req, res) {
   req.session = null;
-  console.log(req.session);
   res.redirect('/');
 });
 
 
-app.post('/checktest', function(req, res) {
+
+// check score of test 
+app.post('/checktest', function (req, res) {
   var score = 0;
   var correctAnswers = [];
   var result = req.body;
@@ -121,6 +115,11 @@ app.post('/checktest', function(req, res) {
       }
     }
     var finalScore = Math.round((100*score)/(checkedAnswers.length));
+
+    var newScoreData = {
+      quizzName: testName,
+      quizzScore: finalScore
+    };
     
     res.json( {
       finalScore: finalScore
@@ -129,13 +128,8 @@ app.post('/checktest', function(req, res) {
 });
 
 
-
-
-
-
-
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -157,7 +151,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
       message: err.message,

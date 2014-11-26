@@ -2,9 +2,36 @@ var express = require('express');
 var adminRouter = express.Router();
 var mongoose = require('mongoose');
 var Quizz = require('../models/quizz');
+var User = require('../models/user');
 
 
+adminRouter.use(function (req, res, next) {
+	
+	Quizz.find({}, function(err, quizzs) {
+		if(err) { throw err; }
+		res.locals.quizzs = quizzs;
+		next();
+	});
 
+});
+
+adminRouter.use(function (req, res, next) {
+	
+	User.find({ userType: 'user' }, function(err, users) {
+		if(err) { throw err; }
+		res.locals.users = users;
+		next();
+	});
+
+});
+
+
+adminRouter.get('/', function(req, res) {
+	res.render('admin/index', {
+		quizzs: res.locals.quizzs,
+		users: res.locals.users
+	});
+});
 
 
 
@@ -46,14 +73,6 @@ adminRouter.delete('/tests/:id', function(req, res) {
 });
 
 
-
-adminRouter.get('/', function(req, res) {
-	Quizz.find({}, function(err, quizzs) {
-		if(err) { throw err; }
-		res.render('admin/index', { quizzs: quizzs });
-	});
-});
-
 adminRouter.get('/create/test', function(req, res) {
 	res.render('admin/create');
 });
@@ -77,6 +96,17 @@ adminRouter.post('/create/test', function(req, res) {
 
 });
 
+
+
+// User Delete Route
+adminRouter.get('/users/:id/delete', function(req, res) {
+	
+	User.remove({ _id: req.params.id}, function(err) {
+		if(err) { throw err; }
+		res.redirect('/admin');
+	});
+
+});
 
 
 

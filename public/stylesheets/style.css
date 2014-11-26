@@ -48,6 +48,24 @@ a:hover {
 }
 
 
+/* Test Home page*/
+
+.test-page-wrapper,
+.admin-panel-wrapper {
+	margin-top: 25px;
+}
+
+
+.test-page-wrapper .panel {
+	margin: 20px 0 20px;
+}
+
+
+
+
+/* End of Test Homepage*/
+
+
 
 
 
@@ -76,7 +94,7 @@ a:hover {
 	bottom: 1%;
 }
 
-#gen-test button {
+#gen-test s {
 	margin-left: 3px;
 }
 
@@ -89,11 +107,21 @@ a:hover {
 	cursor: pointer;
 }
 
-.quizz-list span {
+.admin-panel-wrapper .list-group-item span {
 	margin-left: 3px;
 }
 
 
+
+
+
+.admin-panel-wrapper .list-group-item > a {
+	visibility: hidden;
+}
+
+.admin-panel-wrapper .list-group-item:hover a {
+	visibility: visible;
+}
 
 
 

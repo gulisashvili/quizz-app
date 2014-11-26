@@ -1,20 +1,37 @@
 extends ../layout
 
 block content
-  h2 All Tests
-  .row
-    .col-xs-12.col-md-7
-      .quizz-list-wrapper
-        .panel.panel-default
-          .panel-body 
-            ul(class="list-unstyled")  
-              each quizz in quizzs
-                li.quizz-list
-                  strong #{quizz.testName}
-                    .pull-right
-                      span(class="label label-success start-quizz", data-id="#{quizz._id}")
-                       a(href="/tests/#{quizz._id}") start 
-    .col-xs-12.col-md-5
-      .pull-right
-        span(class="label label-danger")
-          a(href="/logout") logout                 
+  .container.test-page-wrapper
+    
+    .row
+      .col-xs-12
+        span.pull-right(class="label label-danger")
+          a(href="/logout") logout 
+    
+    .row
+      .col-xs-12.col-md-7
+        .quizz-list-wrapper
+          .panel.panel-success
+            .panel-heading
+              strong All Tests
+            .panel-body 
+              ul(class="list-unstyled")  
+                each quizz in quizzs
+                  li.quizz-list
+                    span #{quizz.testName}
+                      .pull-right
+                        span(class="label label-success start-quizz", data-id="#{quizz._id}")
+                         a(href="/tests/#{quizz._id}") start 
+      
+      .col-xs-12.col-md-5
+        .row 
+          .col-xs-12  
+            .panel.panel-success.quizz-history-panel
+              .panel-heading
+                strong Quizz History
+              .panel-body
+                ul.list-unstyled
+                  each i in user.quizzHistory
+                    li #{i.quizzName} --- #{i.quizzScore} point             
+  
+       
