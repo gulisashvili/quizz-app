@@ -26,7 +26,6 @@ exports.register = function(req, res) {
         new User(regData)
           .save(function(err, data) {
             if(err) throw err;
-            console.log(data);
             res.json({'status': 'success'});
         }); 
       } else {

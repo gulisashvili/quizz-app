@@ -120,6 +120,21 @@ app.post('/checktest', function (req, res) {
       quizzName: testName,
       quizzScore: finalScore
     };
+
+    User.update({ _id: req.session.user['_id'],'quizzHistory.quizzName':testName},
+    { 
+        $set: {
+        	"quizzHistory.$.quizzName":testName,
+        	"quizzHistory.$.quizzScore":finalScore
+        }
+    },
+    function(err, upd) {
+      if(!upd){
+    		User.update({ _id: req.session.user['_id']},
+    		{ "$addToSet": { quizzHistory:  newScoreData }},function(err,data){
+    		});
+      }
+    });
     
     res.json( {
       finalScore: finalScore

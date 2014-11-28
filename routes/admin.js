@@ -27,10 +27,7 @@ adminRouter.use(function (req, res, next) {
 
 
 adminRouter.get('/', function(req, res) {
-	res.render('admin/index', {
-		quizzs: res.locals.quizzs,
-		users: res.locals.users
-	});
+	res.render('admin/index');
 });
 
 
@@ -50,7 +47,7 @@ adminRouter.put('/tests/:id/update', function(req, res) {
 	Quizz.findOneAndUpdate({ _id: req.params.id}, result, function(err, updatedQuizz) {
 		if(err) { throw err; }
 		console.log("++Updated++");
-	 res.json({redirect: '/admin'});
+	 	res.json({redirect: '/admin'});
 	});
 
 
