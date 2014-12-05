@@ -30,8 +30,9 @@ block content
               .panel-heading
                 strong Quizz History
               .panel-body
-                ul.list-unstyled
-                  each i in user.quizzHistory
-                    li #{i.quizzName} --- #{i.quizzScore} point             
+                ul.list-group
+                  each i,index in user.quizzHistory
+                    li.list-group-item #{index+1} - #{i.quizzName}  
+                      span.pull-right(class="label label-warning") #{i.quizzScore} points             
   
        

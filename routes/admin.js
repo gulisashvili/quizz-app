@@ -46,7 +46,6 @@ adminRouter.put('/tests/:id/update', function(req, res) {
 
 	Quizz.findOneAndUpdate({ _id: req.params.id}, result, function(err, updatedQuizz) {
 		if(err) { throw err; }
-		console.log("++Updated++");
 	 	res.json({redirect: '/admin'});
 	});
 
@@ -86,7 +85,6 @@ adminRouter.post('/create/test', function(req, res) {
 	})
 	.save(function (err) {
   	if (err) return handleError(err);
-		console.log("SAVED");
 	});
 
 	res.json({redirect: '/admin'});

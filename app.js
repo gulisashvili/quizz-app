@@ -16,11 +16,19 @@ var authMiddlware = require('./middlewares/auth');
 var admin = require('./routes/admin');
 
 
-mongoose.connect("mongodb://localhost/quiz-app");
 
 
 
 var app = express();
+
+app.set('env', process.env.NODE_ENV = process.env.NODE_ENV || 'development'); 
+
+// connect to database based on enviroment
+if(app.get('env') == 'development') {
+  mongoose.connect("mongodb://localhost/quiz-app");
+} else {
+  mongoose.connect("mongodb://levanigls:milan@ds061200.mongolab.com:61200/quizz-db")
+}
 
 
 app.set('trust proxy', 1) // trust first proxy

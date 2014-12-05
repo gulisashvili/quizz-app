@@ -272,9 +272,7 @@ function submitTest() {
           data:  JSON.stringify(sendData),
           url: '/checktest',
           success: function(result){
-            if(result.finalScore) {
               alert("Your score is --- " + result.finalScore + " points");  
-            }
           }
         });
 

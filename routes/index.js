@@ -15,7 +15,6 @@ router.use(function (req, res, next) {
 });
 
 router.get('/', function(req, res) {
-	console.log(res.locals.user);
 	Quizz.find({}, function(err, quizzs) {
 		if(err) { throw err; }
 		res.render('tests/home', { 
