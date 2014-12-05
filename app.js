@@ -51,14 +51,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Log In Page 
 app.get('/', function (req, res) {
-  // new User({
-  //   username: 'levanigls',
-  //   password: 'milan',
-  //   userType: 'admin'
-  // }).save(function(err) {
-
-  // })
-
   if(req.session.user) {
     res.redirect('/tests');
   } else {
