@@ -24,10 +24,10 @@ var app = express();
 app.set('env', process.env.NODE_ENV = process.env.NODE_ENV || 'development'); 
 
 // connect to database based on enviroment
-if(app.get('env') == 'development') {
+if(app.get('env') === 'development') {
   mongoose.connect("mongodb://localhost/quiz-app");
 } else {
-  mongoose.connect("mongodb://levanigls:milan@ds061200.mongolab.com:61200/quizz-db")
+  mongoose.connect("mongodb://levanigls:milan@ds061200.mongolab.com:61200/quizz-db");
 }
 
 
@@ -178,5 +178,5 @@ app.use(function (err, req, res, next) {
 app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + server.address().port);
+  console.log("Server is Listening on: " + app.get('port'));
 });
