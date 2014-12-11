@@ -2,37 +2,37 @@ extends ../layout
 
 block content
   .container.test-page-wrapper
-    
+
     .row
       .col-xs-12
         span.pull-right(class="label label-danger")
-          a(href="/logout") logout 
-    
+          a(href="/logout") logout
+
     .row
       .col-xs-12.col-md-7
         .quizz-list-wrapper
           .panel.panel-success
             .panel-heading
               strong All Tests
-            .panel-body 
-              ul(class="list-unstyled")  
+            .panel-body
+              ul(class="list-unstyled")
                 each quizz in quizzs
                   li.quizz-list
                     span #{quizz.testName}
                       .pull-right
                         span(class="label label-success start-quizz", data-id="#{quizz._id}")
-                         a(href="/tests/#{quizz._id}") start 
-      
+                         a(href="/tests/#{quizz._id}") start
+
       .col-xs-12.col-md-5
-        .row 
-          .col-xs-12  
+        .row
+          .col-xs-12
             .panel.panel-success.quizz-history-panel
               .panel-heading
                 strong Quizz History
               .panel-body
                 ul.list-group
                   each i,index in user.quizzHistory
-                    li.list-group-item #{index+1} - #{i.quizzName}  
-                      span.pull-right(class="label label-warning") #{i.quizzScore} points             
-  
-       
+                    li.list-group-item #{index+1} - #{i.quizzName}
+                      span.pull-right(class="label label-warning") #{i.quizzScore} points
+
+

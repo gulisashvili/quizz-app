@@ -8,17 +8,18 @@ block content
           .panel.panel-default
             .panel-heading
               strong Admin Panel
-            .panel-body 
-              ul(class="list-group")  
+            .panel-body
+              ul(class="list-group")
                 each quizz in quizzs
                   li.list-group-item
                     strong #{quizz.testName}
                       .pull-right
                         span(class="label label-success start-quizz", data-id="#{quizz._id}")
-                         a(href="/tests/#{quizz._id}") start 
-                        span(class="label label-warning edit-quizz", data-id="#{quizz._id}") 
-                         a(href="/admin/tests/#{quizz._id}/edit") edit 
-                        span(class="label label-danger delete-quizz", data-id="#{quizz._id}")  delete 
+                          a(href="/tests/#{quizz._id}") start
+                        span(class="label label-warning edit-quizz", data-id="#{quizz._id}")
+                          a(href="/admin/tests/#{quizz._id}/edit") edit
+                        span(class="label label-danger delete-quizz", data-id="#{quizz._id}")
+                          a(href="/admin/tests/#{quizz._id}/delete") delete
             .panel-footer
               strong All Tests
 
@@ -28,7 +29,7 @@ block content
           .panel.panel-default
             .panel-body
               a.btn.btn-success(href="/admin/create/test") add test
-                span(class="glyphicon glyphicon-plus") 
+                span(class="glyphicon glyphicon-plus")
               a.btn.btn-primary(href="/tests") tests
                 span(class="glyphicon glyphicon-th-list")
         .panel.panel-default

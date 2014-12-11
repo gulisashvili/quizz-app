@@ -8,30 +8,30 @@ block content
           form(id="test-form")
             each question, index in quizz.questions
               .form-group.show-question-wrapper(data-number="#{index+1}")
-                
+
                 .panel.panel-warning
                   .panel-heading
                     h4 #{question.question}
                   .panel-body
                     .radio
-                      label 
+                      label
                         input.answer(type="radio", name="question-#{index+1}", value="1")
                         | #{question.answer1}
 
                     .radio
-                      label 
+                      label
                         input.answer(type="radio", name="question-#{index+1}", value="2")
                         | #{question.answer2}
 
                     .radio
-                      label 
+                      label
                         input.answer(type="radio", name="question-#{index+1}", value="3")
                         | #{question.answer3}
 
                     .radio
-                      label 
+                      label
                         input.answer(type="radio", name="question-#{index+1}", value="4")
                         | #{question.answer4}
 
             input(type="submit", id="submit-test-btn", class="submit-test-btn btn btn-success", value="Submit test")
-              
+

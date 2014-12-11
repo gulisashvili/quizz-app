@@ -25,8 +25,8 @@ app.set('env', process.env.NODE_ENV = process.env.NODE_ENV || 'development');
 
 // connect to database based on enviroment
 if(app.get('env') === 'development') {
-  mongoose.connect("mongodb://localhost/quiz-app");
-} else if(app.get('env') == 'production') {
+  mongoose.connect("mongodb://127.0.0.1/quiz-app");
+} else {
   mongoose.connect("mongodb://levanigls:milan@ds061360.mongolab.com:61360/quizz-database");
 }
 

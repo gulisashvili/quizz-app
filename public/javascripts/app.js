@@ -4,7 +4,7 @@ $(function() {
   register();
   generateQuestions();
   sendTest();
-  deleteQuizz();
+  // deleteQuizz();
   updateTest();
   deleteQuest();
   submitTest();
@@ -16,12 +16,12 @@ $(function() {
 function questTemplateGenerator(number) {
   var template = [
     '<div class="form-group question-wrapper"><label> question ' + number + ' </label>',
-    '<input class="form-control question-name" placeholder="enter question">',
-    '<input class="form-control answer-1" placeholder="enter answer 1">',
-    '<input class="form-control answer-2" placeholder="enter answer 2">',
-    '<input class="form-control answer-3" placeholder="enter answer 3">',
-    '<input class="form-control answer-4" placeholder="enter answer 4">',
-    '<input class="form-control correct-answer" placeholder="correct answer">'
+    '<input class="form-control question-name" placeholder="enter question" required />',
+    '<input class="form-control answer-1" placeholder="enter answer 1" required />',
+    '<input class="form-control answer-2" placeholder="enter answer 2" required />',
+    '<input class="form-control answer-3" placeholder="enter answer 3" required />',
+    '<input class="form-control answer-4" placeholder="enter answer 4" required />',
+    '<input class="form-control correct-answer" placeholder="correct answer" required /></div>'
   ].join('');
   return template;
 }
@@ -70,7 +70,7 @@ function login() {
         username: username,
         password: password
       };
-      
+
       $.post('/login', sendData, function(result) {
         if(result.status == false) {
           $('.alert.alert-danger').remove();
@@ -93,7 +93,7 @@ function login() {
 function generateQuestions() {
   var genBtn = $('.gen-test-btn');
   var genQuestions = $('.generated-questions');
-  var counter = 0;
+  var counter = 1;
 
   genBtn.on('click', function(e) {
     e.preventDefault();
@@ -107,9 +107,10 @@ function generateQuestions() {
 
 function sendTest() {
   var saveBtn = $('#save-test-btn');
+  var form = $('#new-test-form');
 
-
-  saveBtn.on('click', function() {
+  form.on('submit', function(e) {
+    e.preventDefault();
     var question = {};
     var questionArr = [];
     var testName = $('#test-name').val();
@@ -129,10 +130,10 @@ function sendTest() {
           answer3: answer3,
           answer4: answer4,
           correctAnswer: correctAnswer
-        }  
+        }
 
-      
-        questionArr.push(question); 
+
+        questionArr.push(question);
         question = {};
     });
       var sendData = {
@@ -147,37 +148,20 @@ function sendTest() {
           data:  JSON.stringify(sendData),
           url: '/admin/create/test',
           success: function(result){
-            console.log(sendData);  
+            console.log(sendData);
             if (typeof result.redirect == 'string') {
               window.location = result.redirect;
             }
           }
         });
       }
-      
+
 
   });
 
 
 };
 
-
-function deleteQuizz() {
-  var deleteBtn = $('.delete-quizz');
-  var quizzId = deleteBtn.data('id');
-
-  deleteBtn.on('click', function() {
-    $.ajax({
-      url:'/admin/tests/' + quizzId,
-        type:"DELETE",
-        success:function(result){
-          if(result.success) 
-            location.reload();
-        }
-    });
-  });
-
-};
 
 
 function updateTest() {
@@ -205,10 +189,10 @@ function updateTest() {
           answer3: answer3,
           answer4: answer4,
           correctAnswer: correctAnswer
-        }  
+        }
 
-      
-        questionArr.push(question); 
+
+        questionArr.push(question);
         question = {};
     });
       var sendData = {
@@ -223,14 +207,14 @@ function updateTest() {
           data:  JSON.stringify(sendData),
           url: '/admin/tests/' + quizzId + '/update',
           success: function(result){
-            console.log(sendData);  
+            console.log(sendData);
             if (typeof result.redirect == 'string') {
               window.location = result.redirect;
             }
           }
         });
       }
-      
+
 
 
 
@@ -260,7 +244,7 @@ function submitTest() {
       var checkedItem = $(element).find('.answer:checked','#test-form').val();
       checkedArr.push(checkedItem);
     });
-      
+
     var sendData = {
       testName: testName,
       checkedAnswers: checkedArr
@@ -272,7 +256,7 @@ function submitTest() {
           data:  JSON.stringify(sendData),
           url: '/checktest',
           success: function(result){
-              alert("Your score is --- " + result.finalScore + " points");  
+              alert("Your score is --- " + result.finalScore + " points");
           }
         });
 

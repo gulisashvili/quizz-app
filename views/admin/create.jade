@@ -1,22 +1,30 @@
 extends ../layout
 
 block content
-  .row
-    .col-xs-12.col-md-8.col-md-offset-2
-      h3 Create New Test
-      .row.new-test-wrapper
-        .col-xs-12 
-          .form-group
-            label(for='test-name') Test Name
-            textarea#test-name.form-control( placeholder='Enter Test Name')
+  form(id="new-test-form")
+    .row
+      .col-xs-12.col-md-8.col-md-offset-2
+        h3 Create New Test
+        .row.new-test-wrapper
+          .col-xs-12
+            .form-group
+              label(for='test-name') Test Name
+              textarea#test-name.form-control( placeholder='Enter Test Name', required)
 
-  .row
-    .col-xs-12.col-md-8.col-md-offset-2.generated-questions
+    .row
+      .col-xs-12.col-md-8.col-md-offset-2.generated-questions
+        .form-group.question-wrapper
+          label question 1
+          input(class="form-control question-name", placeholder="enter question" required)
+          input(class="form-control answer-1", placeholder="enter answer 1" required)
+          input(class="form-control answer-2", placeholder="enter answer 2" required)
+          input(class="form-control answer-3", placeholder="enter answer 3" required)
+          input(class="form-control answer-4", placeholder="enter answer 4" required)
+          input(class="form-control correct-answer", placeholder="correct answer" required)
 
 
 
-  .form-group#gen-test 
-    button.btn.btn-success#save-test-btn(type='submit') save
-      span.glyphicon.glyphicon-ok
-    button.btn.btn-primary.gen-test-btn(type='submit') add new question
-      span.glyphicon.glyphicon-plus
+    .form-group#gen-test
+      input.btn.btn-success#save-test-btn(type='submit', value="save")
+      button.btn.btn-primary.gen-test-btn add new question
+        span.glyphicon.glyphicon-plus
