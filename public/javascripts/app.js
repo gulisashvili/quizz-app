@@ -167,7 +167,7 @@ function sendTest() {
 function updateTest() {
   var quizzId = $('.edit-quizz-wrapper').data('id');
   var updateBtn = $('#update-quizz-btn');
-  var form = $('update-test-form');
+  var form = $('#update-test-form');
 
   form.on('submit', function(e) {
     e.preventDefault();
