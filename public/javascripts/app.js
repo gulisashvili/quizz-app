@@ -13,9 +13,9 @@ $(function() {
 
 
 
-function questTemplateGenerator(number) {
+function questTemplateGenerator() {
   var template = [
-    '<div class="form-group question-wrapper"><label> question ' + number + ' </label>',
+    '<div class="form-group question-wrapper"><label> question </label>',
     '<input class="form-control question-name" placeholder="enter question" required />',
     '<input class="form-control answer-1" placeholder="enter answer 1" required />',
     '<input class="form-control answer-2" placeholder="enter answer 2" required />',
@@ -99,7 +99,7 @@ function generateQuestions() {
     e.preventDefault();
     var quizzName = $('#test-name').val();
 
-    $(questTemplateGenerator(++counter)).hide().appendTo(genQuestions).fadeIn(500);
+    $(questTemplateGenerator()).hide().appendTo(genQuestions).fadeIn(500);
 
   });
 
