@@ -167,8 +167,10 @@ function sendTest() {
 function updateTest() {
   var quizzId = $('.edit-quizz-wrapper').data('id');
   var updateBtn = $('#update-quizz-btn');
+  var form = $('update-test-form');
 
-  updateBtn.on('click', function() {
+  form.on('submit', function(e) {
+    e.preventDefault();
 
     var question = {};
     var questionArr = [];
